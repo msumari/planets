@@ -7,7 +7,7 @@ const launch = {
   mission: "Kepler X",
   rocket: "Falcon 9",
   launchDate: new Date("June 20, 2022"),
-  destination: "Kepler-62 f",
+  target: "Kepler-62 f",
   customer: ["sule", "suhay"],
   upcoming: true,
   success: true,
