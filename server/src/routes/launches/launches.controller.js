@@ -1,4 +1,9 @@
-const { AllLaunches, setLaunch } = require("../../models/launches.model");
+const {
+  AllLaunches,
+  setLaunch,
+  exists,
+  removeLaunch,
+} = require("../../models/launches.model");
 
 function getAllLaunches(req, res) {
   return res.status(200).json(AllLaunches());
@@ -22,7 +27,18 @@ function AddNewLaunch(req, res) {
   return res.status(201).json(launch);
 }
 
+function AbortLaunch(req, res) {
+  const id = Number(req.params.id);
+  const launch = exists(id);
+  if (!launch) {
+    return res.status(404).json({ error: "Launch Not Found" });
+  }
+  const aborted = removeLaunch(id);
+  return res.status(200).json(aborted);
+}
+
 module.exports = {
   getAllLaunches,
   AddNewLaunch,
+  AbortLaunch,
 };
