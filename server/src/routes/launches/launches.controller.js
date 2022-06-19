@@ -6,7 +6,18 @@ function getAllLaunches(req, res) {
 
 function AddNewLaunch(req, res) {
   const launch = req.body;
+  if (
+    !launch.mission ||
+    !launch.rocket ||
+    !launch.launchDate ||
+    !launch.destination
+  ) {
+    return res.status(400).json({ error: "Launch Data Missing" });
+  }
   launch.launchDate = new Date(launch.launchDate);
+  if (isNaN(launch.launchDate)) {
+    return res.status(400).json({ error: "Invalid Launch Date" });
+  }
   setLaunch(launch);
   return res.status(201).json(launch);
 }
