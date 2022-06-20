@@ -18,6 +18,13 @@ describe("Test POST /launches", () => {
     target: "kepler-186 f",
   };
 
+  const invalidDateLaunch = {
+    mission: "USSR",
+    rocket: "Falcon 1",
+    launchDate: "hi",
+    target: "kepler-186 f",
+  };
+
   const incompleteLaunch = {
     mission: "USSR",
     rocket: "Falcon 1",
@@ -38,12 +45,26 @@ describe("Test POST /launches", () => {
 
     expect(response.body).toMatchObject(incompleteLaunch);
   });
-  test("Should catch missing launch data", () => {
-    const response = 400;
-    expect(response).toBe(400);
+  test("Should catch missing launch data", async () => {
+    const response = await request(app)
+      .post("/launches")
+      .send(incompleteLaunch)
+      .expect(400)
+      .expect("Content-Type", /json/);
+
+    expect(response.body).toStrictEqual({
+      error: "Launch Data Missing",
+    });
   });
-  test("Should catch invalid date", () => {
-    const response = 400;
-    expect(response).toBe(400);
+  test("Should catch invalid date", async () => {
+    const response = await request(app)
+      .post("/launches")
+      .send(invalidDateLaunch)
+      .expect(400)
+      .expect("Content-Type", /json/);
+
+    expect(response.body).toStrictEqual({
+      error: "Invalid Launch Date",
+    });
   });
 });
