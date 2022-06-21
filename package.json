@@ -6,11 +6,12 @@
   "scripts": {
     "watch": "npm run server & npm run client",
     "server": "cd server && npm run watch",
+    "start": "cd server && npm start",
     "client": "cd client && npm start",
     "install-server": "cd server && npm install",
     "install-client": "cd client && npm install",
     "install": "npm run install-server && npm run install-client",
-    "start": "npm run build --prefix client &&  npm start --prefix server",
+    "deploy": "npm run build --prefix client &&  npm start --prefix server",
     "test": "npm test --prefix server"
   },
   "author": "msumari",
